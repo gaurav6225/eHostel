@@ -76,9 +76,10 @@ WSGI_APPLICATION = 'eHostel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/my.cnf',
-        },
+        'NAME': 'eHostel',
+        'HOST': 'localhost',
+        'USER': 'root',
+        'PASSWORD': 'iitkanpur',
     }
 }
 

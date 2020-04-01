@@ -33,7 +33,10 @@ class StudentDetails(models.Model):
     state         =  models.CharField(max_length = 100,null =True)
     pincode       =  models.IntegerField()
     branch        =  models.CharField(max_length = 50)
-    year          = models.IntegerField(default = 2)
+    year          =  models.IntegerField(default = 2)
+    mess_fee      =  models.CharField(max_length = 20)
+    academic_fee  =  models.CharField(max_length = 20)
+    no_due_receipt = models.FileField(upload_to = 'receipt/')
     def __str__(self):
 		return self.student_name
 
@@ -56,7 +59,7 @@ class Swap(models.Model):
     student_2   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
     accept      =  models.BooleanField(default = False)
 
-class roommate(models.Models):
+class Roommate(models.Model):
     student_1   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
     student_2   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
     accept      =  models.BooleanField(default = False)

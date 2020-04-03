@@ -1,21 +1,23 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
-class StudentID(models.Model):
-    year         =  models.IntegerField(default = 2)
-    roll_no      =  models.CharField(max_length = 10, primary_key = True, unique = True)
-    password     =  models.CharField(max_length = 40)
+class MyUser(models.Model):
+    user = models.OneToOneField(User,on_delete = models.CASCADE, primary_key = True)
+    is_warden = models.BooleanField(default = False)
+    year = models.IntegerField(null = True)
+    is_registered = models.BooleanField(default=False)
     def __str__(self):
-		return self.roll_no
+        return self.user.username
+
 
 class Hostel(models.Model):
-    h_name       =  models.CharField(max_length = 20, primary_key = True, unique = True)
-    year_alloted =  models.IntegerField(default = 1)
+    h_name       =  models.CharField(max_length = 20)
+    year =  models.IntegerField(default = 1)
     capacity     =  models.IntegerField(default = 100)
     def __str__(self):
-		return self.h_name
+	       return self.h_name
 
-class StudentDetails(models.Model):
+class Student(models.Model):
     student_name = models.CharField(max_length = 100)
     reg_no = models.CharField(max_length = 10,primary_key = True,unique = True)
     email = models.EmailField(max_length = 25)
@@ -36,30 +38,24 @@ class StudentDetails(models.Model):
     year          =  models.IntegerField(default = 2)
     mess_fee      =  models.CharField(max_length = 20)
     academic_fee  =  models.CharField(max_length = 20)
-    no_due_receipt = models.FileField(upload_to = 'receipt/')
+ #   no_due_receipt = models.FileField(upload_to = 'receipt/')
     def __str__(self):
-		return self.student_name
-
-class Admin(models.Model):
-    username    =  models.CharField(max_length = 20, primary_key = True, unique = True)
-    password    =  models.CharField(max_length = 40)
-    def __str__(self):
-		return self.username
+	       return self.student_name
 
 class Room(models.Model):
     room_no     =  models.IntegerField()
-    student_1   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
-    student_2   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
-    h_name      =  models.ForeignKey(Hostel,on_delete = models.CASCADE)
+    student_1   =  models.ForeignKey(Student, on_delete = models.CASCADE)
+    student_2   =  models.ForeignKey(Student , on_delete = models.CASCADE,related_name='student')
+    h_name      =  models.CharField(max_length=100)
     def __str__(self):
-		return str(self.room_no)
+        return str(self.room_no)
 
 class Swap(models.Model):
-    student_1   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
-    student_2   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
+    student_1   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_1')
+    student_2   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_2')
     accept      =  models.BooleanField(default = False)
 
 class Roommate(models.Model):
-    student_1   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
-    student_2   =  models.ForeignKey(StudentDetails , on_delete = models.CASCADE)
+    student_1   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student1')
+    student_2   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student2')
     accept      =  models.BooleanField(default = False)

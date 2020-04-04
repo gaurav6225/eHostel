@@ -124,7 +124,7 @@ def allocate(request):
                 return HttpResponseRedirect(reverse('allocate'))
             student_1,student_2 = records[2],records[3]
             cursor.execute("INSERT INTO eHostelApp_room (room_no,h_name,student_1_id,student_2_id) VALUES (%s,%s,%s,%s)"%(room_no,h_name,student_1,student_2))
-            return HttpResponseRedirect(reverse('success'))
+            return HttpResponseRedirect(reverse('check_your_room'))
     else:
         if not is_reg(request.user.id):
             return HttpResponseRedirect(reverse('register'))
@@ -155,14 +155,10 @@ def vacancy(request):
             records = cursor.fetchall()
             vacant_room = (len(records) == 0)
             if vacant_room:
-                res = {
-                    'display' : "SELECTED ROOM IS VACANT",
-                }
+                messages.add_message(request,messages.INFO,"SELECTED ROOM IS VACANT")
             else:
-                res = {
-                    'display' : "SELECTED ROOM IS OCCUPIED",
-                }
-            return render(request,'/eHostelApp/show_vacancy.html',res)
+                messages.add_message(request,messages.INFO,"SELECTED ROOM IS OCCUPIED")
+            return HttpResponseRedirect(reverse('vacancy'))
     else:
         with connection.cursor() as cursor:
             cursor.execute("SELECT DISTINCT h_name FROM eHostelApp_hostel")
@@ -181,15 +177,19 @@ def show_student(request):
             cursor.execute("SELECT * FROM eHostelApp_students WHERE reg_no=%s"%(reg_no))
             records = cursor.fetchone()
             valid = (len(records) == 1)
-            res = {
-                'valid'   : valid,
-                'details' : records,
+            cursor.execute("SELECT room_no,h_name FROM eHostelApp_room WHERE student_1_id=%s OR student_2_id=%s"%(reg_no,reg_no))
+            res = cursor.fetchone()
+            valid = valid or (len(res) == 1)
+            temp = {
+                'valid'      : valid,
+                'details'    : records,
+                'room_detail': res,
             }
-            return render(request,'/eHostelApp/details.html',res)
+            return render(request,'/eHostelApp/details.html',temp)
 
     else:
         valid = is_war(request.user.id)
-        render(request,'/eHostelApp/show_student.html',{'valid':valid})
+        render(request,'/eHostelApp/show_student.html',{'war':valid})
 
 @login_required
 def roommate_req(request):
@@ -200,20 +200,14 @@ def roommate_req(request):
             records = cursor.fetchall()
             not_valid = (len(records) == 0) or (roll_no==request.user.username)
             if not_valid :
-                res = {
-                    'mes' : 1,
-                    'print' : "PLEASE CHOOSE A VALID ROLL NUMBER"
-                }
+                messages.add_message(request,messages.INFO,"PLEASE CHOOSE A VALID ROLL NUMBER")
             else:
                 cursor.execute("INSERT INTO eHostelApp_roommate (student_1_id,student_2_id) VLAUES (%s,%s)"%(request.user.username,roll_no))
-                res = {
-                    'mes' : 1,
-                    'print' : "REQUEST SENT SUCCESSFULLY"
-                }
-            render(request,'/eHostelApp/roommate_req.html',res)
+                messages.add_message(request,messages.INFO,"REQUEST SENT SUCCESSFULLY")
+            HttpResponseRedirect(reverse('roommate_req'))
 
     else:
-        render(request,'/eHostelApp/roommate_req.html',{'mes':0})
+        render(request,'/eHostelApp/roommate_req.html',{})
 
 @login_required
 def roommate_acpt(request):
@@ -221,7 +215,7 @@ def roommate_acpt(request):
         cursor.execute("SELECT id,student_1_id FROM eHostelApp_roommate WHERE accept=0 AND student_2_id=%s"%(request.user.username))
         res = cursor.fetchall()
         temp = [dict(zip(["id","student"],i)) for i in res]
-        return render(request,'/eHostelApp/roommate_acpt.html',temp)
+        return render(request,'/eHostelApp/roommate_acpt.html',{'temp' : temp})
 
 @login_required
 def action(request,operation,id):
@@ -244,7 +238,18 @@ def action(request,operation,id):
             cursor.execute("DELETE FROM eHostelApp_roommate WHERE id=%d"%(int(id)))
             return HttpResponseRedirect(reverse('roommate_acpt'))
 
+@login_required
+def check_your_room(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT room_no,h_name FROM eHostelApp_room WHERE student_1_id=%s OR student_2_id=%s"%(reg_no,reg_no))
+        res = cursor.fetchone()
+        valid = (len(res)==1)
+        return render(request,'eHostelApp/check_your_room.html',{'valid':valid,'res':res})
 
+@login_required
+def logout1(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('home'))
 
 ############### Helper Functions ###############
 

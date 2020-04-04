@@ -27,7 +27,6 @@ class Student(models.Model):
         ('female','Female')
     ]
     gender = models.CharField(choices = GENDER_CHOICES,default = 'male',max_length = 6)
-    date_of_birth = models.DateField()
     guardian_name = models.CharField(max_length = 100)
     guardian_phone = models.CharField(max_length = 10)
     address       =   models.CharField(max_length=100)

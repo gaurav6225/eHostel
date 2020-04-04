@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="{% static "base.css" %}" />
 </head>
 <body>
-    <h2>Allocate Room</h2>
+    <h2> Roommate Request Page</h2>>
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -15,21 +15,15 @@
     </ul>
     {% endif %}
 
-    <form action= "{% url 'allocate' %}" method = "POST"  id="form">
+    <form action= "{% url 'roommate_req' %}" method = "POST"  id="form">
         {% csrf_token %}
-
-        <select id="cars">
-            {% for hostel in hostel_list %}
-                <option  name ="h_name" >{{hostel}}</option>
-            {%endfor%}
-          </select>
-          <br><br>
-        <input type="number" name="room_no">   <br><br>
+        <input type="text" name="roll_no">   <br><br>
         <input type="submit" value="Submit">
     </form>
 
     <a href="dashboard/"> Dashboard  </a> <br>
     <a href="logout/"> Logout  </a>
 
+    
 </body>
 </html>

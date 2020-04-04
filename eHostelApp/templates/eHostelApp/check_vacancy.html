@@ -6,7 +6,6 @@
 	<link rel="stylesheet" href="{% static "base.css" %}" />
 </head>
 <body>
-    <h2>Allocate Room</h2>
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -19,7 +18,7 @@
         {% csrf_token %}
 
         <select id="cars">
-            {% for hostel in hostel_list %}
+            {% for hostel in all_hostel %}
                 <option  name ="h_name" >{{hostel}}</option>
             {%endfor%}
           </select>
@@ -31,5 +30,6 @@
     <a href="dashboard/"> Dashboard  </a> <br>
     <a href="logout/"> Logout  </a>
 
+    
 </body>
 </html>

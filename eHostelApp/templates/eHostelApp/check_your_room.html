@@ -6,18 +6,18 @@
 	<link rel="stylesheet" href="{% static "base.css" %}" />
 </head>
 <body>
-    <h2>Success! Room Allocated </h2>
 
     {%if valid%}
-        <h3> Your room is <b>{{res[0]}}</b> and Your hostel is <b>{{res[1]}} </b></h3>
+        <h2>Success! Room Allocated </h2>
+        <h3> Your room is <b>{{room_no}}</b> and Your hostel is <b>{{h_name}} </b></h3>
     {%else%}  
             <h3> Your room is not Allocated. </h3>
     {%endif%}
   
 
     <br>
-    <a href="dashboard/"> Dashboard  </a> <br>
-    <a href="logout/"> Logout  </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
 
 </body>
 </html>

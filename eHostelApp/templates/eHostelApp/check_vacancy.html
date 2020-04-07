@@ -6,6 +6,9 @@
 	<link rel="stylesheet" href="{% static "base.css" %}" />
 </head>
 <body>
+    <h2>Check Vacancy of Rooms </h2>
+
+
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -14,21 +17,22 @@
     </ul>
     {% endif %}
 
-    <form action= "{% url 'allocate' %}" method = "POST"  id="form">
+    <form action= "{% url 'vacancy' %}" method = "POST"  id="form">
         {% csrf_token %}
-
-        <select id="cars">
+        Hostel Name:<br>
+        <select id="cars" name ="h_name">
             {% for hostel in all_hostel %}
-                <option  name ="h_name" >{{hostel}}</option>
+                <option >{{hostel}}</option>
             {%endfor%}
           </select>
           <br><br>
+          Room No: <br>
         <input type="number" name="room_no">   <br><br>
         <input type="submit" value="Submit">
     </form>
 
-    <a href="dashboard/"> Dashboard  </a> <br>
-    <a href="logout/"> Logout  </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
 
     
 </body>

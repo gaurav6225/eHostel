@@ -7,7 +7,7 @@ urlpatterns = [
    path('login_post/', views.login_post, name = 'login_post'),
    path('logout/',views.logout1, name = 'logout'),
    path('register/', views.register, name = 'register'),
-#   path('register_post/',views.register.post,name = 'register_post')
+   path('register_post/',views.register_post,name = 'register_post'),
    path('dashboard/', views.dashboard, name = 'dashboard'),
    path('allocate/', views.allocate, name = 'allocate'),
    path('check_your_room/',views.check_your_room, name='check_your_room'),
@@ -16,8 +16,8 @@ urlpatterns = [
 #   path('swap/',views.swap),
 #   path('swap_req_show/',views.swap_req_show),
    path('roommate_req/',views.roommate_req,name = 'roommate_req'),
-   path('roommate_acpt/',views.roommate,name = 'roommate_acpt'),
-   path('roommate_acpt/(?P<operation>.+)/(?P<id>\d+)',views.action,name='action')
+   path('roommate_acpt/',views.roommate_acpt,name = 'roommate_acpt'),
+   path('roommate_acpt/<str:slug>/<int:id>',views.action,name='action'),
 #   path('end/',views.end),
    path('check_vacancy/',views.vacancy,name = 'vacancy'),
    path('show_student/',views.show_student,name ='show_student'),

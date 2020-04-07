@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="{% static "base.css" %}" />
 </head>
 <body>
-    <h2> Roommate Request Page</h2>>
+    <h2> Roommate Request Page</h2>
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -17,12 +17,13 @@
 
     <form action= "{% url 'roommate_req' %}" method = "POST"  id="form">
         {% csrf_token %}
+        Roll Number of Your Roommate:<br>
         <input type="text" name="roll_no">   <br><br>
         <input type="submit" value="Submit">
     </form>
 
-    <a href="dashboard/"> Dashboard  </a> <br>
-    <a href="logout/"> Logout  </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
 
     
 </body>

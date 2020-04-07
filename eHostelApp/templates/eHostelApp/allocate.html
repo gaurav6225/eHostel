@@ -18,18 +18,21 @@
     <form action= "{% url 'allocate' %}" method = "POST"  id="form">
         {% csrf_token %}
 
-        <select id="cars">
+        Hostel Name:<br>
+        <select id="cars" name ="h_name">
             {% for hostel in hostel_list %}
-                <option  name ="h_name" >{{hostel}}</option>
+                <option>{{hostel}}</option>
             {%endfor%}
           </select>
           <br><br>
+        Room Number:<br>
         <input type="number" name="room_no">   <br><br>
+
         <input type="submit" value="Submit">
     </form>
 
-    <a href="dashboard/"> Dashboard  </a> <br>
-    <a href="logout/"> Logout  </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
 
 </body>
 </html>

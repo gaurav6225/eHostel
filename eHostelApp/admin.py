@@ -6,7 +6,7 @@ from .models import *
 admin.site.register(MyUser)
 admin.site.register(Student)
 admin.site.register(Room)
-admin.site.register(Swap)
+#admin.site.register(Swap)
 admin.site.register(Hostel)
 admin.site.register(Roommate)
 

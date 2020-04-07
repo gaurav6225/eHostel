@@ -32,15 +32,15 @@
        {%for t in temp%}
         <tr>
         <td> {{t.student}}</td>
-        <td>   <a href="{% url 'roommate_acpt' 'accept' t.id %}">  Accept  </a></td>
-        <td>   <a href="{% url 'roommate_acpt' 'decline' t.id %}"> Decline  </a></td>
+        <td>   <a href="{% url 'action' 'accept' t.id %}">  Accept  </a></td>
+        <td>   <a href="{% url 'action' 'decline' t.id %}"> Decline  </a></td>
         </tr>
         {%endfor%}
     </table>
 
 
-    <a href = "dashboard/"> Dashboard </a> <br>
-    <a href="logout/"> Logout </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
     
 </body>
 </html>

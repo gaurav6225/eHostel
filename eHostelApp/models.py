@@ -50,10 +50,10 @@ class Room(models.Model):
     def __str__(self):
         return str(self.room_no)
 
-class Swap(models.Model):
-    student_1   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_1')
-    student_2   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_2')
-    accept      =  models.BooleanField(default = False)
+#class Swap(models.Model):
+#    student_1   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_1')
+#    student_2   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student_2')
+#    accept      =  models.BooleanField(default = False)
 
 class Roommate(models.Model):
     student_1   =  models.ForeignKey(Student , on_delete = models.CASCADE, related_name='student1')

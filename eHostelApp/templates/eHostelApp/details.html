@@ -15,34 +15,63 @@
     <h2> Student Details </h2>
 
     {% if valid %}
-        <table style="width:100%">
-            <tr>
-            <th>NAME</th>
-            <th>REGISTRATION NO.</th> 
-            <th>ROOM NO:</th>
-            <th>PHONE NO: </th>
-            <th>BRANCH </th>
-            <th>YEAR </th>
-            <th>MESS RECEIPT NUMBER </th>>
-            </tr>
-            <tr>
-            <td>{{ details[0] }}</td>
-            <td>{{ details[1] }}</td>
-            <td> {{ res[0] }}</td>
-            <td> {{ res[3] }}</td>
-            <td> {{ res[11] }}</td>
-            <td> {{ res[12] }}</td>
-            <td> {{res[13]}}</td>
+       
+        <legend>Student Information:</legend>
+        Institute Registration Number : 
+            {{reg_no}}
+        <br> <br>
+        Name :
+            {{student_name}}
+        <br> <br>
+        Email ID : 
+            {{email}}
+        <br> <br>
+        Gender: 
+            {{gender}}
+        <br> <br>
+        Department :
+            {{branch}}
+        <br> <br>
+        Year : 
+            {{year}}
+        <br> <br>
+        Guardian Name : 
+            {{guardian_name}}
+        <br> <br>
+        Contact Number : 
+            {{phone_no}}
+        <br> <br>
+        Guardian Contact Number : 
+            {{guardian_phone}}
+        <br> <br>
+        Address : 
+            {{address}}
+        <br> <br>
+        City:
+            {{city}}
+            <br> <br>
+        State:
+        {{state}}
+        <br> <br>
+        Pincode:
+        {{pincode}}
+        <br> <br>
+        Hostel Name:
+        {{h_name}}
+        <br>
+        Room Number:
+        {{room_no}}
+        <br>
 
-            </tr>
-        </table>
+
+
     {% else %}
-        <p> NO RECORDS TO SHOW </p>>
+        <p> NO RECORDS TO SHOW </p>
     {% endif %}    
 
 
-    <a href="dashboard/"> Dashboard  </a> <br>
-    <a href="logout/"> Logout  </a>
+    <a href="{%url 'dashboard'%}"> Dashboard  </a> <br>
+    <a href="{%url 'logout'%}"> Logout  </a>
 
 </body>
 </html>
